@@ -37,12 +37,14 @@
         radial-gradient(circle at 10% 20%, rgba(255,255,255,.9) 0 2px, transparent 3px),
         radial-gradient(circle at 70% 30%, rgba(255,255,255,.8) 0 1.5px, transparent 3px),
         radial-gradient(circle at 40% 80%, rgba(255,255,255,.8) 0 2px, transparent 3px),
-        radial-gradient(circle at 85% 75%, rgba(255,255,255,.7) 0 1.5px, transparent 3px);
+        radial-gradient(circle at 85% 75%, rgba(255,255,255,.7) 0 1.5px, transparent 3px),
+        radial-gradient(circle at 25% 55%, rgba(255,255,255,.75) 0 1.5px, transparent 3px),
+        radial-gradient(circle at 55% 15%, rgba(255,255,255,.75) 0 1.5px, transparent 3px);
       animation: twinkle 3.8s ease-in-out infinite;
     }
     @keyframes twinkle{
       0%,100%{filter: blur(.2px); opacity:.45}
-      50%{filter: blur(0px); opacity:.7}
+      50%{filter: blur(0px); opacity:.75}
     }
 
     /* Floating hearts */
@@ -53,7 +55,7 @@
       position:absolute;
       width:18px; height:18px;
       transform: rotate(45deg);
-      background: rgba(255, 105, 135, .18);
+      background: rgba(255, 105, 135, .22);
       border-radius: 4px;
       animation: floatUp linear infinite;
     }
@@ -61,14 +63,14 @@
       content:"";
       position:absolute;
       width:18px;height:18px;
-      background: rgba(255, 105, 135, .18);
+      background: rgba(255, 105, 135, .22);
       border-radius:50%;
     }
     .heart:before{left:-9px; top:0}
     .heart:after{left:0; top:-9px}
     @keyframes floatUp{
       from{transform: translateY(110vh) rotate(45deg); opacity:.05}
-      15%{opacity:.35}
+      15%{opacity:.45}
       to{transform: translateY(-20vh) rotate(45deg); opacity:0}
     }
 
@@ -117,7 +119,7 @@
       line-height:1.55;
       color: var(--muted);
       margin: 0 auto 18px;
-      max-width: 52ch;
+      max-width: 56ch;
       white-space: pre-line;
     }
 
@@ -147,7 +149,7 @@
       box-shadow: 0 12px 28px rgba(216,90,122,.35);
       transition: transform .08s ease, filter .15s ease, box-shadow .15s ease;
       font-size: 16px;
-      min-width: 210px;
+      min-width: 230px;
     }
     .btn:hover{filter: brightness(1.02)}
     .btn:active{transform: translateY(1px) scale(.99)}
@@ -158,7 +160,6 @@
       box-shadow:none;
     }
 
-    /* Mobile-friendly stacked buttons */
     @media (max-width: 520px){
       .card{padding: 24px 16px}
       .btn{min-width: 100%; padding: 15px 16px}
@@ -195,7 +196,6 @@
       color: rgba(107,59,69,.9);
       margin-top: 12px;
     }
-
     .footerHint{
       margin-top: 14px;
       font-size: 13px;
@@ -216,12 +216,10 @@
         <div class="badge">🚨 IMPORTANT QUESTION 🚨</div>
         <div class="title">Read carefully.</div>
         <p class="text">
-You have been selected for a highly exclusive opportunity.
-
-Out of 8 billion people…
-only ONE was chosen.
-
-No pressure… but it’s kind of a big deal.
+After careful review, background checks,
+and absolutely no competition…
+You have been selected.
+Please remain calm.
         </p>
         <div class="btnRow">
           <button class="btn" onclick="go(2)">Continue… if you dare 😏</button>
@@ -244,8 +242,8 @@ wins board games way too easily,
 and is just a tiny bit dramatic for entertainment purposes?
         </p>
         <div class="btnRow">
-          <button class="btn" onclick="go(3)">Yes, unfortunately 😅</button>
-          <button class="btn alt" onclick="go(3)">Maybe… who are we talking about? 😌</button>
+          <button class="btn" onclick="go(3)">🎲 Yes, and he never lets me win</button>
+          <button class="btn alt" onclick="go(3)">💖 Yes, it’s obvious</button>
         </div>
       </div>
 
@@ -260,11 +258,11 @@ That person is me.
 *nervous boyfriend noises*
         </p>
         <div class="btnRow">
-          <button class="btn" onclick="go(4)">Okay okay… ask already! ✨</button>
+          <button class="btn" onclick="go(4)">Click here if you agree ✅</button>
         </div>
       </div>
 
-      <!-- PAGE 4 -->
+      <!-- PAGE 4 (unchanged copy) -->
       <div class="page" id="p4">
         <div class="badge">💌 FINAL QUESTION 💌</div>
         <div class="title">For Ankita Sahai</div>
@@ -281,11 +279,39 @@ So Miss Ankita Sahai…
         <div class="bigQuestion">Will you be my Valentine? 💘</div>
 
         <div class="btnRow" style="margin-top:14px;">
-          <button class="btn" onclick="go(5)">Yes 💕</button>
-          <button class="btn alt" onclick="go(5)">Yes… I was waiting for you to ask 😌</button>
+          <button class="btn" onclick="go(45)">Yes 💕</button>
+          <button class="btn alt" onclick="go(45)">Yes… I was waiting for you to ask 😌</button>
         </div>
 
         <div class="small">P.S. Both answers are correct.</div>
+      </div>
+
+      <!-- PUZZLE PAGE (between Page 4 and Page 5) -->
+      <div class="page" id="p45">
+        <div class="badge">🧩 BONUS GAME 🧩</div>
+        <div class="title">Unlock your extra reward</div>
+        <p class="text">
+Solve this tiny puzzle (it’s our photo 😌).
+When you finish, you’ll unlock a bonus on the date.
+        </p>
+
+        <div style="display:flex; justify-content:center; margin: 12px 0 6px;">
+          <canvas id="puzzle" width="300" height="300"
+            style="border-radius:18px; box-shadow: 0 18px 50px rgba(0,0,0,.14); background:#fff;"></canvas>
+        </div>
+
+        <div class="btnRow" style="margin-top:12px;">
+          <button class="btn" onclick="shufflePuzzle()">Shuffle 🔀</button>
+          <button class="btn alt" onclick="go(4)">Back ↩️</button>
+        </div>
+
+        <div id="puzzleMsg" class="small" style="margin-top:14px;"></div>
+
+        <div class="btnRow" style="margin-top:12px;">
+          <button id="puzzleNext" class="btn" style="display:none;" onclick="go(5)">
+            Claim your reward 🎁
+          </button>
+        </div>
       </div>
 
       <!-- PAGE 5 -->
@@ -332,23 +358,33 @@ Preparations for:
       go(1);
     }
 
-    // Floating hearts generator
+    // ===== More floating hearts (denser background) =====
     const hearts = document.getElementById('hearts');
     function spawnHeart(){
       const h = document.createElement('div');
       h.className = 'heart';
+
       const left = Math.random()*100;
-      const dur = 6 + Math.random()*8;
-      const size = 10 + Math.random()*18;
+      const dur = 5 + Math.random()*8;        // faster average -> more visible
+      const size = 10 + Math.random()*22;     // varied sizes
+      const opacity = 0.14 + Math.random()*0.30;
+
       h.style.left = left + 'vw';
       h.style.animationDuration = dur + 's';
       h.style.width = size + 'px';
       h.style.height = size + 'px';
-      h.style.opacity = (0.12 + Math.random()*0.25).toFixed(2);
+      h.style.opacity = opacity.toFixed(2);
+
+      // Slight color variance
+      const tint = 160 + Math.floor(Math.random()*60); // 160-219
+      h.style.background = `rgba(255, ${tint}, ${tint+10}, .22)`;
+      h.style.filter = 'blur(0.2px)';
+
       hearts.appendChild(h);
       setTimeout(()=>h.remove(), dur*1000);
     }
-    setInterval(spawnHeart, 700);
+    // denser spawn than before
+    setInterval(spawnHeart, 420);
 
     // Confetti on Page 5
     let confettiOn = false;
@@ -358,20 +394,20 @@ Preparations for:
       if(confettiOn) return;
       confettiOn = true;
       conf.innerHTML = '';
-      const count = 42;
+      const count = 44;
       for(let i=0;i<count;i++){
         const piece = document.createElement('i');
         const left = Math.random()*100;
         const dur = 3 + Math.random()*3.5;
         const delay = Math.random()*1.6;
         const w = 6 + Math.random()*8;
-        const h = 10 + Math.random()*16;
+        const hh = 10 + Math.random()*16;
 
         piece.style.left = left + '%';
         piece.style.animationDuration = dur + 's';
         piece.style.animationDelay = delay + 's';
         piece.style.width = w + 'px';
-        piece.style.height = h + 'px';
+        piece.style.height = hh + 'px';
         piece.style.opacity = (0.25 + Math.random()*0.45).toFixed(2);
 
         const r = Math.random();
@@ -385,6 +421,130 @@ Preparations for:
       confettiOn = false;
       conf.innerHTML = '';
     }
+
+    // ================== Sliding Puzzle (3x3) ==================
+    const PUZZLE_SIZE = 3;
+    const canvas = document.getElementById('puzzle');
+    const ctx = canvas.getContext('2d');
+    const img = new Image();
+
+    // ✅ Your photo in repo root:
+    img.src = 'ankita.jpeg';
+
+    let tiles = []; // numbers 0..8, where 8 is blank
+    let tileSize = canvas.width / PUZZLE_SIZE;
+
+    function initPuzzle(){
+      tiles = Array.from({length: PUZZLE_SIZE*PUZZLE_SIZE}, (_,i)=>i);
+      drawPuzzle();
+      setPuzzleMessage("Tap a tile next to the empty space to move it 💘", false);
+      document.getElementById('puzzleNext').style.display = 'none';
+    }
+
+    function drawPuzzle(){
+      if(!img.complete) return;
+
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+
+      for(let i=0;i<tiles.length;i++){
+        const val = tiles[i];
+        const x = (i % PUZZLE_SIZE) * tileSize;
+        const y = Math.floor(i / PUZZLE_SIZE) * tileSize;
+
+        if(val === tiles.length - 1){
+          ctx.fillStyle = 'rgba(255,255,255,0.65)';
+          ctx.fillRect(x,y,tileSize,tileSize);
+          continue;
+        }
+
+        const sx = (val % PUZZLE_SIZE) * (img.width / PUZZLE_SIZE);
+        const sy = Math.floor(val / PUZZLE_SIZE) * (img.height / PUZZLE_SIZE);
+        const sw = img.width / PUZZLE_SIZE;
+        const sh = img.height / PUZZLE_SIZE;
+
+        ctx.drawImage(img, sx, sy, sw, sh, x, y, tileSize, tileSize);
+
+        ctx.strokeStyle = 'rgba(255,255,255,0.55)';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(x,y,tileSize,tileSize);
+      }
+    }
+
+    function isSolved(){
+      for(let i=0;i<tiles.length;i++){
+        if(tiles[i] !== i) return false;
+      }
+      return true;
+    }
+
+    function neighbors(idx){
+      const x = idx % PUZZLE_SIZE;
+      const y = Math.floor(idx / PUZZLE_SIZE);
+      const ns = [];
+      if(x>0) ns.push(idx-1);
+      if(x<PUZZLE_SIZE-1) ns.push(idx+1);
+      if(y>0) ns.push(idx-PUZZLE_SIZE);
+      if(y<PUZZLE_SIZE-1) ns.push(idx+PUZZLE_SIZE);
+      return ns;
+    }
+
+    function swap(a,b){
+      const t = tiles[a];
+      tiles[a] = tiles[b];
+      tiles[b] = t;
+    }
+
+    canvas.addEventListener('click', (e)=>{
+      const rect = canvas.getBoundingClientRect();
+      const cx = e.clientX - rect.left;
+      const cy = e.clientY - rect.top;
+
+      const x = Math.floor(cx / tileSize);
+      const y = Math.floor(cy / tileSize);
+      const idx = y*PUZZLE_SIZE + x;
+
+      const blankIdx = tiles.indexOf(tiles.length - 1);
+      if(neighbors(idx).includes(blankIdx)){
+        swap(idx, blankIdx);
+        drawPuzzle();
+
+        if(isSolved()){
+          setPuzzleMessage("🎉 YOU DID IT! Bonus unlocked: You get to pick dessert AND I can’t say no 😌🍰", true);
+          document.getElementById('puzzleNext').style.display = 'inline-block';
+        }
+      }
+    });
+
+    function shufflePuzzle(){
+      document.getElementById('puzzleNext').style.display = 'none';
+      setPuzzleMessage("Shuffling… 👀", false);
+
+      let moves = 140;
+      while(moves--){
+        const blankIdx = tiles.indexOf(tiles.length - 1);
+        const opts = neighbors(blankIdx);
+        const pick = opts[Math.floor(Math.random()*opts.length)];
+        swap(blankIdx, pick);
+      }
+      drawPuzzle();
+      setPuzzleMessage("Okay! Solve it to unlock the bonus 💘", false);
+    }
+
+    function setPuzzleMessage(msg){
+      const el = document.getElementById('puzzleMsg');
+      if(!el) return;
+      el.textContent = msg;
+    }
+
+    // Ensure canvas fits mobile nicely
+    img.onload = () => {
+      const w = Math.min(320, Math.max(260, Math.floor(window.innerWidth * 0.78)));
+      canvas.width = w;
+      canvas.height = w;
+      tileSize = canvas.width / PUZZLE_SIZE;
+      initPuzzle();
+      shufflePuzzle(); // start shuffled automatically
+    };
   </script>
 </body>
 </html>
